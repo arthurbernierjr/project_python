@@ -117,9 +117,16 @@ blog_schema = BlogSchema()
 blogs_schema = BlogSchema(many=True)
 user_schema = UserSchema()
 users_schema = UserSchema(many=True)
+category_schema = CategorySchema()
+categories_schema = CategorySchema(many=True)
+tag_schema = TagSchema()
+tags_schema = TagSchema(many=True)
+reader_schema = ReaderSchema()
+readers_schema = ReaderSchema(many=True)
+blog_history_schema = BlogHistorySchema()
+blog_histories_schema = BlogHistorySchema(many=True)
 
-
-# Routes
+# Primary Routes
 
 # Create
 @app.route('/users', methods=['POST'])
@@ -138,8 +145,10 @@ def add_product():
     body = request.json['body']
     user_id = request.json['user']
     user = User.query.get(user_id)
+    category_id = request.json['category']
+    category = Category.query.get(category_id)
 
-    new_blog = Blog(title=title, sub_title=sub_title, body=body, user=user)
+    new_blog = Blog(title=title, sub_title=sub_title, body=body, user=user, category=category)
 
     db.session.add(new_blog)
     db.session.commit()
@@ -188,6 +197,76 @@ def delete_blog(id):
 
     return blog_schema.jsonify(blog)
 
+
+# Categories
+@app.route('/categories', methods=['POST'])
+def add_category():
+    name = request.json['name']
+    new_category = Category(name=name)
+    db.session.add(new_category)
+    db.session.commit()
+    return category_schema.jsonify(new_category)
+
+
+@app.route('/categories', methods=['GET'])
+def get_categories():
+  all_categories = Product.query.all()
+  result = categories_schema.dump(all_categories)
+  return jsonify(result)
+
+@app.route('/categories/<id>', methods=['GET'])
+def get_category(id):
+  category = Category.query.get(id)
+  return category_schema.jsonify(category)
+
+@app.route('/categories/<id>', methods=['DELETE'])
+def delete_category(id):
+  category = Category.query.get(id)
+  db.session.delete(category)
+  db.session.commit()
+
+  return category_schema.jsonify(category)
+
+# Tags
+@app.route('/blog/<id>/addTag', methods=['POST'])
+def add_new_tag(id):
+    blog = Blog.query.get(id)
+    name = request.json['name']
+    new_tag = Tag(name=name)
+    db.session.add(new_tag)
+    blog.tags.append(new_tag)
+    db.session.commit()
+    return blog_schema.jsonify(blog)
+
+@app.route('/blog/<id>/addTag/<tag_id>', methods=['PUT'])
+def add_tag(id, tag_id):
+    blog = Blog.query.get(id)
+    tag = Tag.query.get(tag_id)
+    blog.tags.append(tag)
+    db.session.commit()
+    return blog_schema.jsonify(blog)
+
+
+
+
+# History
+@app.route('/blog/<id>/save', methods=['POST'])
+def save_blog(id):
+    blog = Blog.query.get(id)
+    new_history = BlogHistory(title=blog.title, sub_title=blog.sub_title, body=blog.body, blog=blog)
+    db.session.add(new_history)
+    db.session.commit()
+    return blog_schema.jsonify(blog)
+
+
+# Readers
+@app.route('/reader/<id>/blog/<blog_id>', methods=['POST'])
+def add_reader(id, blog_id):
+    blog = Blog.query.get(blog_id)
+    reader = Reader.query.get(id)
+    blog.readers.append(reader)
+    db.session.commit()
+    return blog_schema.jsonify(blog)
 # Run Server
 
 if __name__ == '__main__':
