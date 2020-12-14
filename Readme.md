@@ -49,7 +49,7 @@ $ python app.py
 ### Available Routes
 
 # CRUD on Blogs
-## /blogs  and /blogs/<id> method Get, POST, PUT, Delete Create a Blog
+## `/blogs  and /blogs/<id>` method Get, POST, PUT, Delete Create a Blog
 ### params
         - title
         - subtitle
@@ -58,24 +58,24 @@ $ python app.py
 
 
 # Create and Read Users
-## /users and /user/<id> methods GET and POST
+## `/users and /user/<id>` methods GET and POST
 ### params
         - name
 
 
 # Categories CRUD
-## /categories /categories/<id> methods GET, POST, PUT, DELETE
+## `/categories /categories/<id>` methods GET, POST, PUT, DELETE
 ### params
         - name
 
 # Other
 
-## /blog/<id>/addTag  Creates a New Tag and adds it to a blog
+## `/blog/<id>/addTag`  Creates a New Tag and adds it to a blog
 ### params
       - name
 
-## /<id>/blog/addTag/<tag_id>Takes an existing tag and adds it to a blog
+## `/<id>/blog/addTag/<tag_id>`Takes an existing tag and adds it to a blog
 
-## /reader/<id>/blog/<blog_id>  Reader reads a blog
+## `/reader/<id>/blog/<blog_id>`  Reader reads a blog
 
-### /blog/<id>/save Adds a blog History entry to save progress
+### `/blog/<id>/save` Adds a blog History entry to save progress
