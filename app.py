@@ -1,4 +1,4 @@
-from flask import Flask, request , jsonify
+from flask import Flask, request , jsonify, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 import os
@@ -141,7 +141,7 @@ def add_user():
     return user_schema.jsonify(new_user)
 
 @app.route('/blogs', methods=['POST'])
-def add_product():
+def add_blog():
     title = request.json['title']
     sub_title = request.json['sub_title']
     body = request.json['body']
@@ -212,7 +212,7 @@ def add_category():
 
 @app.route('/categories', methods=['GET'])
 def get_categories():
-  all_categories = Product.query.all()
+  all_categories = Category.query.all()
   result = categories_schema.dump(all_categories)
   return jsonify(result)
 
@@ -269,6 +269,23 @@ def add_reader(id, blog_id):
     blog.readers.append(reader)
     db.session.commit()
     return blog_schema.jsonify(blog)
+def has_no_empty_params(rule):
+    defaults = rule.defaults if rule.defaults is not None else ()
+    arguments = rule.arguments if rule.arguments is not None else ()
+    return len(defaults) >= len(arguments)
+
+
+@app.route("/site-map")
+def site_map():
+    links = []
+    for rule in app.url_map.iter_rules():
+        # Filter out rules we can't navigate to in a browser
+        # and rules that require parameters
+        if has_no_empty_params(rule):
+            url = url_for(rule.endpoint, **(rule.defaults or {}))
+            links.append((url, rule.endpoint))
+    # links is now a list of url, endpoint tuples
+    return jsonify(links)
 # Run Server
 
 if __name__ == '__main__':

@@ -8,21 +8,22 @@ $ python seed.py
 $ python app.py
 ```
 # Some Core Functionality
+### Sequence for a blog going through core use cases
 <hr>
-## added a blog post
+## adding a blog post
 ![](https://dl.dropboxusercontent.com/s/5fvlzhl74u5ibgs/Screen%20Shot%202020-12-14%20at%2012.56.04%20AM.png?dl=1)
 
-## updated a blog post
+## updating a blog post
 ![](https://dl.dropboxusercontent.com/s/e2rddb62yfdxtqr/Screen%20Shot%202020-12-14%20at%2012.57.35%20AM.png?dl=1)
 
-## added a reader to a blog post
+## adding a reader to a blog post
 ![](https://dl.dropboxusercontent.com/s/e6zqw8isf0tuxws/Screen%20Shot%202020-12-14%20at%201.03.03%20AM.png?dl=1)
 
-## added a tag to a blog post
+## adding a tag to a blog post
 
 ![](https://dl.dropboxusercontent.com/s/uswet7uso8eydwc/Screen%20Shot%202020-12-14%20at%201.05.33%20AM.png?dl=1)
 
-## recorded the history of an article so you can comeback to it later
+## recording/saving the history of an article so you can comeback to it later
 
 ![](https://dl.dropboxusercontent.com/s/8afgnzrujt4gt6o/Screen%20Shot%202020-12-14%20at%201.10.32%20AM.png?dl=0)
 
@@ -30,10 +31,16 @@ $ python app.py
 
 ![](https://dl.dropboxusercontent.com/s/9vkakja36iaig1g/Screen%20Shot%202020-12-14%20at%201.47.47%20AM.png?dl=0)
 
+## Architecture Diagram showing major systems (MVC)
+
 ![](https://dl.dropboxusercontent.com/s/qmh4jo04f4mqz3f/Screen%20Shot%202020-12-14%20at%201.49.43%20AM.png?dl=0)
+
+## Use Cases
 
 ![](https://dl.dropboxusercontent.com/s/9lf7xs5tnex880d/Screen%20Shot%202020-12-14%20at%201.50.37%20AM.png?dl=0)
 
+# A sketch of the UI
+<hr>
 ## Blog Post Visual
 ![](https://dl.dropboxusercontent.com/s/aa6w3xl21riva1a/Screen%20Shot%202020-12-14%20at%201.59.02%20AM.png?dl=0)
 
@@ -46,7 +53,7 @@ $ python app.py
 - The main functionality that exists is the ability to Create, Read ,Update and Destroy content
 # In a client such as postman you can visit the following Routes
 
-### Available Routes
+### Available Routes which are the full elaboration of use cases in action
 
 # CRUD on Blogs
 ## `/blogs  and /blogs/<id>` method Get, POST, PUT, Delete Create a Blog
