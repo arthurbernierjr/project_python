@@ -68,7 +68,7 @@ class Tag(db.Model):
 # BlogHistory
 class BlogHistory(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(255), unique=True)
+    title = db.Column(db.String(255))
     sub_title = db.Column(db.String(255))
     body = db.Column(db.String)
     blog_id = db.Column(db.Integer, db.ForeignKey('blog.id'), nullable=False)
@@ -100,10 +100,12 @@ class BlogHistorySchema(ma.SQLAlchemyAutoSchema):
         model = BlogHistory
 
 class BlogSchema(ma.SQLAlchemyAutoSchema):
+    history = ma.Nested(BlogHistorySchema, many=True)
     class Meta:
         model = Blog
         include_fk = True
-
+    readers = ma.auto_field()
+    tags = ma.auto_field()
     # id = ma.auto_field()
     # title = ma.auto_field()
     # sub_title = ma.auto_field()
